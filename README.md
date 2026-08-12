@@ -8,7 +8,7 @@ CLI, license a machine, and create or repair a Kaigen project.
 In Claude Code:
 
 ```
-/plugin marketplace add Terminus-Technologies/kaigen-plugins
+/plugin marketplace add Kaigen-Technologies/kaigen-plugins
 /plugin install kaigen@kaigen
 ```
 
