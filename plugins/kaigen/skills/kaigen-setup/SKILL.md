@@ -164,9 +164,9 @@ The CLI updates itself independently of this document. If a command here does
 not match what the binary does, the binary wins — check `kaigen --help`, and
 tell the user their copy of this skill is stale.
 
-- installed as a Claude Code plugin: `/plugin marketplace update`, then
-  `/plugin install kaigen@kaigen`
-- installed with the skills CLI: `npx skills add https://api.kaigen3d.com/skill.md -g`
+- Claude Code plugin: `/plugin marketplace update`, then `/plugin install kaigen@kaigen`
+- Codex plugin: `codex plugin marketplace upgrade`
+- skills CLI: `npx skills add https://api.kaigen3d.com/skill.md -g`
 - the current version is always at <https://api.kaigen3d.com/skill.md>
 
 ## Inside a project

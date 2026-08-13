@@ -1,0 +1,20 @@
+{
+  "name": "kaigen",
+  "interface": {
+    "displayName": "Kaigen"
+  },
+  "plugins": [
+    {
+      "name": "kaigen",
+      "source": {
+        "source": "local",
+        "path": "./plugins/kaigen"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

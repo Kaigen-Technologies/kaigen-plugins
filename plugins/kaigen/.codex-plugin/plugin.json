@@ -1,0 +1,26 @@
+{
+  "name": "kaigen",
+  "version": "0.1.2",
+  "description": "Install, license and scaffold projects with the Kaigen 3D engine",
+  "author": {
+    "name": "Kaigen",
+    "url": "https://kaigen3d.com"
+  },
+  "homepage": "https://kaigen3d.com",
+  "repository": "https://github.com/Kaigen-Technologies/kaigen-plugins",
+  "keywords": [
+    "kaigen",
+    "3d",
+    "game-engine",
+    "cli"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Kaigen",
+    "shortDescription": "Set up the Kaigen 3D engine",
+    "longDescription": "Installs the Kaigen CLI, activates a license key, and creates or repairs Kaigen projects.",
+    "developerName": "Kaigen",
+    "category": "Productivity",
+    "websiteURL": "https://kaigen3d.com"
+  }
+}
