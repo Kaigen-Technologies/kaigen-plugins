@@ -119,7 +119,9 @@ edit your shell profile) and confirm with `kaigen version` before continuing.
 | `kaigen activate <KGEN key>` | licenses this machine (once per machine) |
 | `kaigen doctor` | check everything, print fixes |
 | `kaigen engine install [version]` | install an engine; no version = the project's pin, else latest |
-| `kaigen engine list` | what is installed |
+| `kaigen engine list` | what is installed, and which components each install has |
+| `kaigen engine add <component>` | add optional platform support (`ios`, `wasm`, `tests`) |
+| `kaigen engine remove <component>` | remove an optional component |
 | `kaigen new <name>` | create a project, installing the engine if needed |
 | `kaigen restore` | rebuild `./hz` in a freshly cloned project from its pin |
 
@@ -133,6 +135,38 @@ Templates: `cubes`, `empty`, `platformer`, `obby`, `lasertag`, `procgen_candy`.
 
 `kaigen activate` also accepts `--key <KGEN key>` instead of the positional, and
 `kaigen engine activate --key …` is the same command under its older name.
+
+## Platform support is a separate download
+
+An engine install starts with only the `core` component, which builds for the
+host desktop platform. **iOS and web are optional components and are NOT
+installed by default** — if a build for one of them fails on a fresh machine,
+this is why, and it is a download, not a code problem.
+
+```bash
+kaigen engine add ios      # iOS support
+kaigen engine add wasm     # web/browser support
+kaigen engine add tests    # the engine test suite
+kaigen engine remove wasm  # frees the disk again
+```
+
+Run these from inside the project and the version comes from its pin. Outside a
+project, pass `--version <v>` or it cannot tell which install you mean.
+
+`kaigen engine list` shows what each install has:
+
+```
+engine: 0.5.8.006-internal (binary, macos, 120.48 MB) — components: core
+engine: 0.5.8.006-internal (binary, macos, 132.98 MB) — components: core+ios
+```
+
+Rules the CLI enforces, so do not fight them:
+
+- `core` is required — `add core` and `remove core` both fail by design.
+- An unknown name fails with `no <name> component published for <version>`;
+  the real names are `core`, `ios`, `wasm`, `tests`.
+- Components are per engine *install*, not per project. Adding `ios` to a
+  version benefits every project pinned to it.
 
 ## Where things live
 
@@ -181,6 +215,9 @@ kaigen restore          # recreates ./hz, installing the pinned engine if missin
 hz/hzbuild install --accept-license   # first machine only: downloads the toolchain
 hz/hzbuild macos run
 ```
+
+Building for iOS or web needs its engine component first — `kaigen engine add
+ios` / `kaigen engine add wasm`. See "Platform support is a separate download".
 
 Inside a project, build with `hz/hzbuild`, not `kaigen`. Same binary, but
 `hz/hzbuild` is the one pinned to that project's engine.
