@@ -1,7 +1,7 @@
 {
   "name": "kaigen",
   "description": "Install, license and scaffold projects with the Kaigen 3D engine",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "author": {
     "name": "Kaigen",
     "url": "https://kaigen3d.com"

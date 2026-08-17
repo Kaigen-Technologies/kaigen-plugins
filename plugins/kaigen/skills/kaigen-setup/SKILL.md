@@ -29,8 +29,19 @@ separate install step. `kaigen engine install` exists for pinning a specific
 version or pre-warming a machine — `doctor` will report a missing engine as a
 problem, but creating a project fixes it.
 
-On Windows use `irm https://api.kaigen3d.com/install.ps1 | iex` instead of the
-curl line.
+On Windows the equivalent is:
+
+```powershell
+irm https://api.kaigen3d.com/install.ps1 | iex   # installs %LOCALAPPDATA%\kaigen\bin
+[Environment]::SetEnvironmentVariable('PATH', [Environment]::GetEnvironmentVariable('PATH','User') + ';' + "$env:LOCALAPPDATA\kaigen\bin", 'User')
+kaigen activate KGEN-XXXX-XXXX-XXXX
+kaigen doctor
+kaigen new mygame --template cubes
+cd mygame; hz\hzbuild windows run
+```
+
+Use `SetEnvironmentVariable`, never `setx`: `setx` truncates at 1024 characters
+and writes the expanded user+system PATH into the user PATH.
 
 **You cannot obtain a license key.** It comes from the user or from Kaigen. If
 there is no key, stop and ask for one — do not guess, and do not try to work
@@ -124,6 +135,9 @@ edit your shell profile) and confirm with `kaigen version` before continuing.
 | `kaigen engine remove <component>` | remove an optional component |
 | `kaigen new <name>` | create a project, installing the engine if needed |
 | `kaigen restore` | rebuild `./hz` in a freshly cloned project from its pin |
+| `kaigen use --status` | what engine this project points at, and whether it is a drop or a source tree |
+| `kaigen use <version>` | point `./hz` at an installed version (restores the pin) |
+| `kaigen use source [<path>]` | point `./hz` at a local engine checkout — **source licences only** |
 
 `kaigen new` flags: `--template <name>` (default `cubes`), `--engine <version>`,
 `--embed` (copy the engine into the project instead of linking it), `--swift`
@@ -168,6 +182,26 @@ Rules the CLI enforces, so do not fight them:
 - Components are per engine *install*, not per project. Adding `ios` to a
   version benefits every project pinned to it.
 
+## Pointing a project at an engine source tree
+
+**Source licences only.** A binary-edition machine has no engine source, so
+`use source` there leaves the project unbuildable. If unsure, ask the user which
+licence they hold rather than guessing.
+
+```bash
+kaigen use source /path/to/kaigen-engine
+kaigen use --status
+kaigen use 0.6.0            # back to an installed version
+```
+
+- `use source` **removes `engine_version` from `hzproject.hzt`** — the engine is
+  then whatever the checkout is at, and `kaigen restore` no longer applies. Do
+  not re-add the pin by hand; `kaigen use <version>` restores it.
+- `use --status` prints the mode and an identity string containing the engine's
+  git sha. Use it before assuming which engine a build came from.
+- Switching between a source tree and a drop changes the engine identity and
+  forces a full rebuild. That is expected — do not go hunting for a cause.
+
 ## Where things live
 
 | what | macOS | Windows |
@@ -185,8 +219,15 @@ curl -fsSL https://api.kaigen3d.com/install.sh | KAIGEN_HOME=/opt/kaigen sh
 ```
 
 `KAIGEN_HOME=… curl … | sh` silently does nothing — it sets the variable for
-`curl`. `KAIGEN_HOME` only affects where the CLI itself lives; the license and
-the engines always follow `HOME`.
+`curl`. On Windows there is no pipe-side to get wrong; set it in the session
+before running the installer:
+
+```powershell
+$env:KAIGEN_HOME = "D:\kaigen"; irm https://api.kaigen3d.com/install.ps1 | iex
+```
+
+`KAIGEN_HOME` only affects where the CLI itself lives; the license and the
+engines always follow `HOME` (macOS) / `%LOCALAPPDATA%` (Windows).
 
 The binary identifies itself as `hzbuild` in its own usage text and log lines —
 `kaigen` and `hzbuild` are the same program. Where the two disagree, this
@@ -229,6 +270,7 @@ Inside a project, build with `hz/hzbuild`, not `kaigen`. Same binary, but
 | `no valid hzlicense.hzt` | machine not activated | `kaigen activate <key>` |
 | `restore: no hzproject.hzt` | wrong directory | `cd` to the project root |
 | `./hz is missing` | fresh clone | `kaigen restore` |
+| `./hz` points at the wrong engine | switched versions or trees | `kaigen use --status`, then `kaigen use <version>` or `kaigen use source <path>` |
 | `no native compiler` | toolchain absent | `hz/hzbuild install --accept-license` |
 | `no metal compiler` (macOS) | Command Line Tools only | install full Xcode, then `sudo xcode-select -s /Applications/Xcode.app` |
 | activation exits 2 | key unknown, revoked, expired, or at its machine cap | ask the user; you cannot fix this |
