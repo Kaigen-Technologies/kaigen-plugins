@@ -18,7 +18,7 @@ gameplay, rendering, shaders and build details.
 ```bash
 curl -fsSL https://api.kaigen3d.com/install.sh | sh   # installs ~/.kaigen/bin/kaigen
 export PATH="$HOME/.kaigen/bin:$PATH"
-kaigen activate KGEN-XXXX-XXXX-XXXX                   # the user's license key
+kaigen activate KGEN-XXXX-XXXX-XXXX --accept-terms    # the user's key; see "Terms" below
 kaigen doctor                                          # confirms everything
 kaigen new mygame --template cubes
 cd mygame && hz/hzbuild macos run                      # or: windows run
@@ -34,7 +34,7 @@ On Windows the equivalent is:
 ```powershell
 irm https://api.kaigen3d.com/install.ps1 | iex   # installs %LOCALAPPDATA%\kaigen\bin
 [Environment]::SetEnvironmentVariable('PATH', [Environment]::GetEnvironmentVariable('PATH','User') + ';' + "$env:LOCALAPPDATA\kaigen\bin", 'User')
-kaigen activate KGEN-XXXX-XXXX-XXXX
+kaigen activate KGEN-XXXX-XXXX-XXXX --accept-terms
 kaigen doctor
 kaigen new mygame --template cubes
 cd mygame; hz\hzbuild windows run
@@ -88,7 +88,7 @@ Success shapes:
 {"engines":[{"version":"…","id":"…","edition":"binary|source","platform":"macos",
              "size_bytes":167849039}],"engines_dir":"…"}
 // activate
-{"activated":true,"licensee":"…","license_id":"…","expires":"YYYY-MM-DD","license_dir":"…"}
+{"activated":true,"licensee":"…","license_id":"…","expires":"YYYY-MM-DD","license_dir":"…","terms_version":"…"}
 ```
 
 Failure is always one shape:
@@ -127,8 +127,9 @@ edit your shell profile) and confirm with `kaigen version` before continuing.
 | command | what it does |
 |---|---|
 | `kaigen version` | CLI version and the backend it targets |
-| `kaigen activate <KGEN key>` | licenses this machine (once per machine) |
+| `kaigen activate <KGEN key> --accept-terms` | licenses this machine (once per machine), accepting Kaigen's terms |
 | `kaigen doctor` | check everything, print fixes |
+| `kaigen self-update` | update this `kaigen` to the latest release |
 | `kaigen engine install [version]` | install an engine; no version = the project's pin, else latest |
 | `kaigen engine list` | what is installed, and which components each install has |
 | `kaigen engine add <component>` | add optional platform support (`ios`, `wasm`, `tests`) |
@@ -147,8 +148,37 @@ you pass `--no-git`.**
 
 Templates: `cubes`, `empty`, `platformer`, `obby`, `lasertag`, `procgen_candy`.
 
+### Updates
+
+`kaigen self-update` downloads the latest release, checks it against the signed
+catalog, and replaces the binary in place (`--json`: `{"updated":true,"from":…,
+"to":…}`, or `{"updated":false,"version":…,"latest":…}` when already current).
+Once a day, at the end of a command, `kaigen` checks for a newer release and
+prints one line on stderr when there is one (never in `--json` mode). When the
+installed version is below the minimum Kaigen supports, every command except
+`version`, `help` and `self-update` fails with `update_required` (exit 1,
+remediation `kaigen self-update`). Codes: `update_check_failed` and
+`download_failed` (network, retry), `needs_manual` (the binary's folder is not
+writable: run the remediation, a reinstall), `engine_copy` (exit 3: this is a
+project's `hz/hzbuild`, which updates with its engine; use the installed
+`kaigen`). `doctor` reports it as the `cli` check.
+
 `kaigen activate` also accepts `--key <KGEN key>` instead of the positional, and
 `kaigen engine activate --key …` is the same command under its older name.
+
+### Terms
+
+Activating accepts Kaigen's Terms of Service, Privacy Policy and Closed Beta
+Agreement. Without `--accept-terms`, `kaigen activate` changes nothing and
+answers with the three links (`--json`: `{"error":{"code":"terms_required",
+"remediation":"kaigen activate <key> --accept-terms","terms_version":…,
+"terms_url":…,"privacy_url":…,"beta_url":…}}`, exit 3).
+
+**Never pass `--accept-terms` on the user's behalf without asking.** Show them
+the three links from that answer, and run the remediation only after they say
+they agree. `terms_changed` (exit 3) means new terms were published while
+activating: show the new links and ask again. `terms_unavailable` (exit 1) is a
+network failure: retry.
 
 ## Platform support is a separate download
 
@@ -235,9 +265,9 @@ document and `kaigen --help` describe the `kaigen` spelling.
 
 ## Keeping this current
 
-The CLI updates itself independently of this document. If a command here does
-not match what the binary does, the binary wins — check `kaigen --help`, and
-tell the user their copy of this skill is stale.
+`kaigen self-update` updates the CLI; this document updates separately. If a
+command here does not match what the binary does, the binary wins — check
+`kaigen --help`, and tell the user their copy of this skill is stale.
 
 - Claude Code plugin: `/plugin marketplace update`, then `/plugin install kaigen@kaigen`
 - Codex plugin: `codex plugin marketplace upgrade`
@@ -275,6 +305,7 @@ Inside a project, build with `hz/hzbuild`, not `kaigen`. Same binary, but
 | `no metal compiler` (macOS) | Command Line Tools only | install full Xcode, then `sudo xcode-select -s /Applications/Xcode.app` |
 | activation exits 2 | key unknown, revoked, expired, or at its machine cap | ask the user; you cannot fix this |
 | `command not found: kaigen` | not on PATH | `export PATH="$HOME/.kaigen/bin:$PATH"` |
+| `update_required` | this kaigen is below the supported minimum | `kaigen self-update` |
 
 ## Rules
 
