@@ -306,6 +306,28 @@ Inside a project, build with `hz/hzbuild`, not `kaigen`. Same binary, but
 | activation exits 2 | key unknown, revoked, expired, or at its machine cap | ask the user; you cannot fix this |
 | `command not found: kaigen` | not on PATH | `export PATH="$HOME/.kaigen/bin:$PATH"` |
 | `update_required` | this kaigen is below the supported minimum | `kaigen self-update` |
+| `license_unconfirmed` (exit 2) | offline more than 30 days: build/run/publish stop | connect to the internet, run the same command again |
+| `license_revoked` / `license_inactive` (exit 2) | the license was revoked or deactivated | ask the user; they need a valid key (`kaigen activate <key>`) |
+| `license: not confirmed … within N day(s)` warning | nearing the 30-day offline limit | connect to the internet once; any kaigen command confirms it |
+
+## When Kaigen itself is broken: offer a report
+
+If an error is Kaigen's, not the project's (a crash in engine frames, a failure inside
+the engine, an engine build error the project did not cause, a `kaigen` command that
+fails for no reason you can fix) and you cannot get past it, tell the user and ASK
+before filing — never file on your own:
+
+```bash
+kaigen report "what failed, how to reproduce, your diagnosis" --json            # anywhere
+hz/hzbuild report "…" --project --json                                          # inside a project
+```
+
+It sends the Kaigen team the description plus versions, system info, the recent session
+logs, the last crash and (with `--project`) the project's `hzproject.hzt` — never source
+code — and prints `{"report_id":"KR-7F3A-91C2",…,"status":"sent"|"queued"}`. Give the
+user the `KR-` id; `queued` means offline and it goes out automatically. Write the
+diagnosis as facts (the error, the frame, what you tried); never put secrets or the
+user's private data in it.
 
 ## Rules
 
