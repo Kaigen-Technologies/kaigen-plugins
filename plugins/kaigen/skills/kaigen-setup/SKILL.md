@@ -306,6 +306,9 @@ Inside a project, build with `hz/hzbuild`, not `kaigen`. Same binary, but
 | activation exits 2 | key unknown, revoked, expired, or at its machine cap | ask the user; you cannot fix this |
 | `command not found: kaigen` | not on PATH | `export PATH="$HOME/.kaigen/bin:$PATH"` |
 | `update_required` | this kaigen is below the supported minimum | `kaigen self-update` |
+| `license_missing` (exit 2) | no license on this machine: build/run/publish need one | ask the user for their key; `kaigen activate <key>` |
+| `license_invalid` (exit 2) | the license file is damaged or was modified | `kaigen activate <key>` again |
+| `license_expired` (exit 2) | the license is past its date | the user renews it with Kaigen, then `kaigen activate <key>` |
 | `license_unconfirmed` (exit 2) | offline more than 30 days: build/run/publish stop | connect to the internet, run the same command again |
 | `license_revoked` / `license_inactive` (exit 2) | the license was revoked or deactivated | ask the user; they need a valid key (`kaigen activate <key>`) |
 | `license: not confirmed … within N day(s)` warning | nearing the 30-day offline limit | connect to the internet once; any kaigen command confirms it |
