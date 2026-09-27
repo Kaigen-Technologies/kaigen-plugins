@@ -325,9 +325,9 @@ kaigen report "what failed, how to reproduce, your diagnosis" --json            
 hz/hzbuild report "…" --project --json                                          # inside a project
 ```
 
-It sends the Kaigen team the description plus versions, system info, the recent session
-logs, the last crash and (with `--project`) the project's `hzproject.hzt` — never source
-code — and prints `{"report_id":"KR-7F3A-91C2",…,"status":"sent"|"queued"}`. Give the
+It sends the Kaigen team the description plus versions, system info, the last crash and
+(with `--project`) the project's `hzproject.hzt` and recent session logs — never source
+code; home-folder paths are replaced by `~` — and prints `{"report_id":"KR-7F3A-91C2",…,"status":"sent"|"queued"}`. Give the
 user the `KR-` id; `queued` means offline and it goes out automatically. Write the
 diagnosis as facts (the error, the frame, what you tried); never put secrets or the
 user's private data in it.
