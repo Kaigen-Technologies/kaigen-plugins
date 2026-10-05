@@ -20,14 +20,16 @@ curl -fsSL https://api.kaigen3d.com/install.sh | sh   # installs ~/.kaigen/bin/k
 export PATH="$HOME/.kaigen/bin:$PATH"
 kaigen activate KGEN-XXXX-XXXX-XXXX --accept-terms    # the user's key; see "Terms" below
 kaigen doctor                                          # confirms everything
-kaigen new mygame --template cubes
+kaigen engine install                                  # the latest engine
+kaigen new mygame --template starting-template
 cd mygame && hz/hzbuild macos run                      # or: windows run
 ```
 
-`kaigen new` installs the engine itself if the machine has none, so there is no
-separate install step. `kaigen engine install` exists for pinning a specific
-version or pre-warming a machine — `doctor` will report a missing engine as a
-problem, but creating a project fixes it.
+`kaigen new` and `kaigen templates` use the newest engine installed on this
+machine and never ask the server which one; with none installed they stop with
+`no engine installed — run: kaigen engine install`. `kaigen engine install` with
+no version fetches the latest. `--engine <version>` (installed first if needed)
+and a project's pin still win.
 
 On Windows the equivalent is:
 
@@ -36,7 +38,8 @@ irm https://api.kaigen3d.com/install.ps1 | iex   # installs %LOCALAPPDATA%\kaige
 [Environment]::SetEnvironmentVariable('PATH', [Environment]::GetEnvironmentVariable('PATH','User') + ';' + "$env:LOCALAPPDATA\kaigen\bin", 'User')
 kaigen activate KGEN-XXXX-XXXX-XXXX --accept-terms
 kaigen doctor
-kaigen new mygame --template cubes
+kaigen engine install
+kaigen new mygame --template starting-template
 cd mygame; hz\hzbuild windows run
 ```
 
@@ -134,7 +137,9 @@ edit your shell profile) and confirm with `kaigen version` before continuing.
 | `kaigen engine list` | what is installed, and which components each install has |
 | `kaigen engine add <component>` | add optional platform support (`ios`, `wasm`, `tests`) |
 | `kaigen engine remove <component>` | remove an optional component |
-| `kaigen new <name>` | create a project, installing the engine if needed |
+| `kaigen templates` | the templates available for the newest installed engine (or the project's pin), and which are downloaded |
+| `kaigen templates remove <name>` | delete a downloaded template (it downloads again on the next `new`) |
+| `kaigen new <name>` | create a project with the newest installed engine |
 | `kaigen restore` | rebuild `./hz` in a freshly cloned project from its pin |
 | `kaigen use --status` | what engine this project points at, and whether it is a drop or a source tree |
 | `kaigen use <version>` | point `./hz` at an installed version (restores the pin) |
@@ -146,7 +151,10 @@ edit your shell profile) and confirm with `kaigen version` before continuing.
 `--no-git`. **`new` initialises a git repo and makes an initial commit unless
 you pass `--no-git`.**
 
-Templates: `cubes`, `empty`, `platformer`, `obby`, `lasertag`, `procgen_candy`.
+Templates are downloaded on demand for the engine version in use: `new` fetches a
+missing one itself (it needs the network and an activated license the first
+time). `kaigen templates` lists what exists; an unknown `--template` name prints
+the same list.
 
 ### Updates
 
@@ -298,6 +306,7 @@ Inside a project, build with `hz/hzbuild`, not `kaigen`. Same binary, but
 | symptom | cause | fix |
 |---|---|---|
 | `no valid hzlicense.hzt` | machine not activated | `kaigen activate <key>` |
+| `no engine installed — run: kaigen engine install` | `new` / `templates` found no engine on this machine | `kaigen engine install` |
 | `restore: no hzproject.hzt` | wrong directory | `cd` to the project root |
 | `./hz is missing` | fresh clone | `kaigen restore` |
 | `./hz` points at the wrong engine | switched versions or trees | `kaigen use --status`, then `kaigen use <version>` or `kaigen use source <path>` |
