@@ -141,6 +141,12 @@ Games live in `~/KaigenGames` (`KAIGEN_GAMES_DIR` or `--games-dir` move it).
 
 `kaigen new <name>` is the older spelling of `projects new` that creates the folder in the current directory.
 
+`kaigen templates` lists the templates for the installed engine. Besides `starting-template` (the default) and the
+full games, there are multiplayer templates (`multiplayer-starting-template`, `kestrel` the Competitive Shooter,
+`village-mmo` the MMO, `netcode-scale-test`) and VR ones (`xr-*`). Run a multiplayer game with more players on this
+machine with `hz/hzbuild run -- --clients 2 --bots 8` (the host, one more window, 8 bots); published to the web, it
+hosts in the browser.
+
 ## Build and look
 
 Inside a game, build with its own `hz/hzbuild` (it is pinned to the game's engine), never with `kaigen`:
