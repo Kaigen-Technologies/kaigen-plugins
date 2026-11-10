@@ -155,9 +155,15 @@ Inside a game, build with its own `hz/hzbuild` (it is pinned to the game's engin
 hz/hzbuild windows        # or macos, linux; add `run` to start it
 ```
 
-A build that exits 0 can still look wrong. **Before you tell the user a change is done, look at it**: take a
-screenshot of the running game (the game's own skills, `.claude/skills/hz-build`, show how) and check that the change
-is visible. A colour hidden behind the sky, or an object off camera, is not done.
+A build that exits 0 can still look wrong. **Before you tell the user a change is done, look at it**: run a script
+that screenshots the game without opening a window, then read the image and check that the change is visible.
+
+```bash
+hz/hzbuild windows --commands "2:screenshot;3:quit" -- --offscreen   # writes out/screenshot_commands.png
+```
+
+The script can also press keys, click UI and move entities; `0.5:help` lists every action, and the game's own skills
+(`.claude/skills/hz-build`) cover the rest. A colour hidden behind the sky, or an object off camera, is not done.
 
 ## Publish
 
