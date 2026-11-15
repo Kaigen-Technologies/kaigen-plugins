@@ -26,5 +26,17 @@ Then ask your agent "make me a 3D game with Kaigen" or "set up Kaigen", and it f
 - Website: https://kaigen3d.com
 - Docs for agents: https://kaigen3d.com/llms.txt
 
+## Data and services
+
+The plugin is one skill with instructions; it runs nothing and stores nothing on its own. Following it, the agent runs
+the Kaigen CLI, which talks to Kaigen's services at kaigen3d.com:
+
+- **api.kaigen3d.com**: signs the user in (their Kaigen account and email), checks the licence, downloads the engine,
+  and receives the engine's technical data (versions, system info, crash reports) and any report the user agrees to send.
+- **play.kaigen3d.com**: hosts the games the user chooses to publish, until they delete them.
+
+Kaigen keeps account data and published games for as long as the account exists. Privacy Policy:
+https://kaigen3d.com/privacy
+
 The skill is MIT licensed. The Kaigen engine it installs is licensed under the
 [Kaigen Software Licence Agreement](https://kaigen3d.com/licence).
