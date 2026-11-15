@@ -17,11 +17,27 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Kaigen",
-    "shortDescription": "Set up the Kaigen 3D engine",
-    "longDescription": "Installs the Kaigen CLI, activates a license key, and creates or repairs Kaigen projects.",
+    "shortDescription": "3D engine made for AI agents",
+    "longDescription": "Kaigen is the new 3D engine made for AI agents: as lightweight as three.js, as powerful as Unreal, one codebase shipping native to the web, Windows, macOS, Linux, iOS, Android and VR. This plugin teaches the agent to install the Kaigen CLI, sign the user in, start a game, simulation or 3D app from a template, build it, check it with screenshots and publish it to a link anyone can play. For anyone making a game, a simulation, an architecture or visualization project or any kind of 3D app. Building runs on the user's own machine (Windows, macOS or Linux, x86_64) and needs a free Kaigen account.",
     "developerName": "Kaigen",
-    "category": "Productivity",
-    "websiteURL": "https://kaigen3d.com"
+    "category": "Developer Tools",
+    "capabilities": [
+      "Install the Kaigen CLI and engine",
+      "Create games and 3D apps from templates",
+      "Build, run and screenshot games",
+      "Publish games to a playable link"
+    ],
+    "websiteURL": "https://kaigen3d.com",
+    "supportURL": "https://discord.gg/gwbDuTSDQ",
+    "privacyPolicyURL": "https://kaigen3d.com/privacy",
+    "termsOfServiceURL": "https://kaigen3d.com/terms",
+    "defaultPrompt": [
+      "Make me a 3D game with Kaigen",
+      "Set up Kaigen on this machine",
+      "Publish my Kaigen game to a link"
+    ],
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/icon.png"
   },
   "license": "MIT"
 }
