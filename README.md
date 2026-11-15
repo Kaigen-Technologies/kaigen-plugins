@@ -26,7 +26,7 @@ appear.
 **Anything else** (Cursor, Copilot, Windsurf, …)
 
 ```bash
-npx skills add https://api.kaigen3d.com/skill.md -g
+npx skills add Kaigen-Technologies/kaigen-plugins -g
 ```
 
 Or read it directly: <https://api.kaigen3d.com/skill.md>

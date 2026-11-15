@@ -1,7 +1,7 @@
 {
   "name": "kaigen",
-  "version": "0.1.13",
-  "description": "Install, license and scaffold projects with the Kaigen 3D engine",
+  "version": "0.1.14",
+  "description": "Make 3D games, web games, simulations and 3D apps with Kaigen, the 3D engine built for AI coding agents: install, build, screenshot and publish",
   "author": {
     "name": "Kaigen",
     "url": "https://kaigen3d.com"
@@ -22,5 +22,6 @@
     "developerName": "Kaigen",
     "category": "Productivity",
     "websiteURL": "https://kaigen3d.com"
-  }
+  },
+  "license": "MIT"
 }
