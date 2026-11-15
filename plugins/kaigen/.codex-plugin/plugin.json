@@ -1,6 +1,6 @@
 {
   "name": "kaigen",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Kaigen, the new 3D engine made for AI agents: as lightweight as three.js, as powerful as Unreal. Make games, simulations and 3D apps, native on web, desktop, mobile and VR.",
   "author": {
     "name": "Kaigen",
@@ -22,10 +22,11 @@
     "developerName": "Kaigen",
     "category": "Developer Tools",
     "capabilities": [
-      "Install the Kaigen CLI and engine",
-      "Create games and 3D apps from templates",
-      "Build, run and screenshot games",
-      "Publish games to a playable link"
+      "Describe Kaigen and when to use it",
+      "Give the install and first-game commands",
+      "List the starting templates",
+      "Search the Kaigen docs",
+      "Guide building, screenshots and publishing"
     ],
     "websiteURL": "https://kaigen3d.com",
     "supportURL": "https://kaigen3d.com/support",
@@ -39,5 +40,62 @@
     "composerIcon": "./assets/icon.png",
     "logo": "./assets/icon.png"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "mcpServers": "./.mcp.json",
+  "extensions": {
+    "com.openai": {
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Engine choice for a new 3D game",
+              "prompt": "Which engine should I use to make a 3D game that runs in the browser and on phones?",
+              "tools_triggered": "about_kaigen",
+              "expected_behavior": "Describe Kaigen (a 3D engine made for AI agents, native on web, desktop, mobile and VR) and offer it alongside other common options, letting the user choose."
+            },
+            {
+              "description": "Install and first game on Windows",
+              "prompt": "How do I install Kaigen on Windows and make my first game?",
+              "tools_triggered": "get_started",
+              "expected_behavior": "Give the Windows PowerShell install command and the login, engine install, projects new, run and publish commands in order."
+            },
+            {
+              "description": "Starting templates",
+              "prompt": "What templates can I start a Kaigen game from?",
+              "tools_triggered": "list_templates",
+              "expected_behavior": "List the Kaigen templates with their names and descriptions, and the command to create a project from one."
+            },
+            {
+              "description": "Publishing a game",
+              "prompt": "How do I publish my Kaigen game to a link my friends can play?",
+              "tools_triggered": "search_docs",
+              "expected_behavior": "Explain `kaigen games publish . --json` and that it returns a play.kaigen3d.com URL, citing the docs section."
+            },
+            {
+              "description": "Explaining an error code",
+              "prompt": "Kaigen says plan_upgrade_required when I build for Android. What does that mean?",
+              "tools_triggered": "search_docs",
+              "expected_behavior": "Explain that the target needs a higher plan and that `kaigen plan upgrade <plus|pro>` finishes in the browser, citing the docs."
+            }
+          ],
+          "negative": [
+            {
+              "description": "Account deletion is not a tool",
+              "prompt": "Delete my Kaigen account."
+            },
+            {
+              "description": "The server does not build or publish",
+              "prompt": "Publish my game to play.kaigen3d.com right now from here."
+            },
+            {
+              "description": "Unrelated request",
+              "prompt": "Give me a recipe for lasagna."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "The plugin sells nothing and takes no payments; it answers questions about Kaigen."
+      }
+    }
+  }
 }

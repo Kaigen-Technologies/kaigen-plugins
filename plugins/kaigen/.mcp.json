@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "kaigen": {
+      "type": "http",
+      "url": "https://kaigen3d.com/mcp"
+    }
+  }
+}

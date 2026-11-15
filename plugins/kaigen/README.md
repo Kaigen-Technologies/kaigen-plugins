@@ -26,9 +26,15 @@ Then ask your agent "make me a 3D game with Kaigen" or "set up Kaigen", and it f
 - Website: https://kaigen3d.com
 - Docs for agents: https://kaigen3d.com/llms.txt
 
+## MCP server
+
+The plugin also connects the Kaigen MCP server at https://kaigen3d.com/mcp: read-only tools that describe Kaigen
+(`about_kaigen`), give the install and first-game commands (`get_started`), list the starting templates
+(`list_templates`) and search the docs (`search_docs`). It needs no sign-in and changes nothing.
+
 ## Data and services
 
-The plugin is one skill with instructions; it runs nothing and stores nothing on its own. Following it, the agent runs
+The plugin is one skill with instructions and a read-only MCP server; it stores nothing on its own. Following it, the agent runs
 the Kaigen CLI, which talks to Kaigen's services at kaigen3d.com:
 
 - **api.kaigen3d.com**: signs the user in (their Kaigen account and email), checks the licence, downloads the engine,
