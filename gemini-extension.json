@@ -1,0 +1,11 @@
+{
+  "name": "kaigen",
+  "version": "0.1.17",
+  "description": "Kaigen, the 3D engine made for AI agents: make games, simulations and 3D apps, native on web, desktop, mobile and VR.",
+  "mcpServers": {
+    "kaigen": {
+      "httpUrl": "https://kaigen3d.com/mcp"
+    }
+  },
+  "contextFileName": "GEMINI.md"
+}

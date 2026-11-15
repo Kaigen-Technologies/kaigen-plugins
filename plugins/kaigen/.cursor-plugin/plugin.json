@@ -1,0 +1,24 @@
+{
+  "name": "kaigen",
+  "description": "Kaigen, the new 3D engine made for AI agents: as lightweight as three.js, as powerful as Unreal. Make games, simulations and 3D apps, native on web, desktop, mobile and VR.",
+  "version": "0.1.17",
+  "author": {
+    "name": "Kaigen"
+  },
+  "homepage": "https://kaigen3d.com",
+  "repository": "https://github.com/Kaigen-Technologies/kaigen-plugins",
+  "license": "MIT",
+  "keywords": [
+    "kaigen",
+    "3d",
+    "game-engine",
+    "gamedev",
+    "webgpu",
+    "simulation",
+    "visualization",
+    "vr"
+  ],
+  "logo": "assets/icon.png",
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "kaigen",
+  "owner": {
+    "name": "Kaigen",
+    "email": "hello@kaigen3d.com"
+  },
+  "metadata": {
+    "description": "Kaigen, the 3D engine made for AI agents"
+  },
+  "plugins": [
+    {
+      "name": "kaigen",
+      "source": "plugins/kaigen",
+      "description": "Kaigen, the new 3D engine made for AI agents: as lightweight as three.js, as powerful as Unreal. Make games, simulations and 3D apps, native on web, desktop, mobile and VR."
+    }
+  ]
+}
