@@ -21,7 +21,7 @@ kaigen projects new "My web game" --template starting-template --json
 cd "<dir from the answer>"
 ```
 
-Read the game's `AGENTS.md` and `hz/wiki/index.md` before writing engine code.
+Read the game's engine skills (`.claude/skills/`), its `AGENTS.md` and `hz/wiki/index.md` before writing engine code.
 
 ## 2. Develop natively, check with screenshots
 

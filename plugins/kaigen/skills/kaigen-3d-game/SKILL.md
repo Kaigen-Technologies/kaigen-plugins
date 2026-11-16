@@ -32,7 +32,8 @@ cd "<dir from the answer>"
 
 ## 2. Read the game's guide before writing code
 
-Read the game's `AGENTS.md`, then `hz/wiki/index.md` and the page for each engine feature you are about to use. The
+Read the game's engine skills (`.claude/skills/`, starting with `hz-core` and `hz-game`), its `AGENTS.md`, then
+`hz/wiki/index.md` and the page for each engine feature you are about to use. The
 engine is C with its own standard library (no libc, no malloc, no printf) and runs app code on every core; the wiki
 says how.
 

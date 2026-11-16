@@ -1,7 +1,7 @@
 {
   "name": "kaigen",
   "description": "Kaigen, the new 3D engine made for AI agents: as lightweight as three.js, as powerful as Unreal. Make games, simulations and 3D apps, native on web, desktop, mobile and VR.",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "author": {
     "name": "Kaigen",
     "url": "https://kaigen3d.com"

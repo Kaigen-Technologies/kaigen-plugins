@@ -26,7 +26,8 @@ kaigen projects new "My VR app" --template xr-starting-template --json
 cd "<dir from the answer>"
 ```
 
-Read the game's `AGENTS.md`, `hz/wiki/index.md` and `hz/wiki/engine/xr.md` before writing code.
+Read the game's engine skills (`.claude/skills/`), its `AGENTS.md`, `hz/wiki/index.md` and `hz/wiki/engine/xr.md`
+before writing code.
 
 ## 2. Check every change without a headset
 

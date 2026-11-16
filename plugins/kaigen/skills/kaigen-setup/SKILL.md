@@ -15,8 +15,9 @@ Kaigen is a high performance real-time 3D engine written in modern C. `kaigen` i
 installs the engine, makes games and publishes them to play.kaigen3d.com. It runs on Windows, macOS and Linux
 (x86_64).
 
-This skill covers **getting from nothing to a published game**. Once a game exists, read its `AGENTS.md` and the
-engine wiki at `<game>/hz/wiki/index.md` for gameplay, rendering, shaders and builds; both match the game's engine.
+This skill covers **getting from nothing to a published game**. Once a game exists, the engine ships its own skills
+under `<game>/.claude/skills` (and `.agents/skills`), its `AGENTS.md` and the wiki at `<game>/hz/wiki/index.md`: read
+those for gameplay, rendering, shaders and builds; they match the game's engine.
 
 ## The whole path
 
@@ -168,8 +169,8 @@ that screenshots the game without opening a window, then read the image and chec
 hz/hzbuild windows --commands "2:screenshot;3:quit" -- --offscreen   # writes out/screenshot_commands.png
 ```
 
-The script can also press keys, click UI and move entities; `0.5:help` lists every action, and the engine wiki
-(`hz/wiki/engine/commands-verbs.md`) covers the rest. A colour hidden behind the sky, or an object off camera, is not done.
+The script can also press keys, click UI and move entities; `0.5:help` lists every action, and the game's own skills
+(`.claude/skills/hz-build`) cover the rest. A colour hidden behind the sky, or an object off camera, is not done.
 
 ## Publish
 
