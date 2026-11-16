@@ -214,6 +214,7 @@ then the same command works. Plans have a 14-day trial; tell the user a card is 
 
 | command | what it does |
 |---|---|
+| `kaigen engine available [--platform <p>]` | the engines you can install, newest first, from the signed catalog (nothing is installed) |
 | `kaigen engine install [version]` | install an engine; no version = the game's pin, else the latest |
 | `kaigen engine list` | what is installed, and each install's components |
 | `kaigen engine add <component>` | add `ios`, `android`, `wasm` or `tests` support |
@@ -224,6 +225,12 @@ then the same command works. Plans have a 14-day trial; tell the user a card is 
 
 Components are per engine install, not per game. Run `engine add` inside the game (the version comes from its pin)
 or pass `--version <v>`.
+
+To see which engine versions exist before installing or pinning one, run `kaigen engine available --json`:
+`{"platform":"macos","edition":"binary","latest":"…","engines":[{"version":"…","built_at":"…","size_bytes":0,"installed":false,"components":[{"name":"core","required":true,"size_bytes":0}]}]}`.
+`latest` is null when the platform has none. `--platform windows|macos|linux` lists another platform (its `installed`
+is always false), `--source` the source edition (needs a license that includes source). A catalog that can't be fetched
+or doesn't verify answers `catalog_unavailable`, never an unverified list.
 
 ## AI agents
 
@@ -261,7 +268,8 @@ is always at <https://api.kaigen3d.com/skill.md>.
 | `no native compiler` | `hz/hzbuild install --accept-license` |
 | `no Metal shader compiler` (macOS) | `hz/hzbuild install --accept-license` |
 | `plan_upgrade_required` (exit 2) | the plan doesn't cover this target: `kaigen plan upgrade <plan>`, then the same command |
-| `module_conflict` from `hzbuild use` | the user's module edits can't merge with that engine; nothing changed. Merge the listed files by hand, or stay |
+| `module_conflict` from `hzbuild use` | the user's module edits can't merge with that engine; nothing changed. `hzbuild use <v> --plan` shows every file; each proposal is in `.kaigen/upgrade/conflicts/<module>/<path>`: edit the file, then rerun with `--keep <module>/<path>` (your bytes) or `--take <module>/<path>` (the engine's), as the log prints |
+| `move_interrupted` | a `use` move was cut short; builds refuse until `hzbuild use <v>` finishes it or `hzbuild use --revert` undoes it |
 | `quota` on publish | unpublish a game (`kaigen games unpublish <id>`) or upgrade (`kaigen plan`) |
 | `license_unconfirmed` (exit 2) | offline more than 30 days: connect, run the same command again |
 | `update_required` | `kaigen self-update` |
